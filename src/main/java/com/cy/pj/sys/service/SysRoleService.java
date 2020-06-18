@@ -53,5 +53,4 @@ public interface SysRoleService {
      * @return
      */
     int updateObject(SysRole entity, Integer[] menuIds);
-
 }
