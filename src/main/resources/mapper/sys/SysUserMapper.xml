@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cy.pj.sys.dao.SysUserDao">
+
+    <sql id="queryWhereId">
+        FROM sys_users
+        <where>
+            <if test="username != null || username != ''">
+                username LIKE CONCAT("%", #{username}, "%")
+            </if>
+        </where>
+    </sql>
+
+    <!-- 根据查询条件统计记录总数 -->
+    <select id="getRowCount" resultType="int">
+        SELECT COUNT(*)
+        <include refid="queryWhereId" />
+    </select>
+
+    <!-- 基于查询条件查询当前页的记录 -->
+    <select id="findPageObjects" resultMap="sysUserDept">
+        SELECT *
+        <include refid="queryWhereId" />
+        ORDER BY createdTime DESC
+    </select>
+
+    <resultMap id="sysUserDept" type="com.cy.pj.sys.entity.SysUserDept">
+        <association property="sysDept" column="deptId" select="com.cy.pj.sys.dao.SysDeptDao.findById">
+        </association>
+    </resultMap>
+
+</mapper>
