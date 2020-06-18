@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cy.pj.sys.dao.SysMenuDao">
+
+    <!-- 查询所有菜单以及菜单对应的上级菜单名称 -->
+    <select id="findObjects" resultType="map">
+        <!-- 方案 1: 嵌套查询
+        SELECT
+            c.id, c.name, c.parentId,
+            (SELECT name FROM sys_menus p WHERE c.parentId = p.id) parentName
+        FROM
+            sys_menus c;
+         -->
+        <!-- 方案 2: 表关联查询(左外连接查询, 左表全部显示) -->
+        SELECT
+            c.*, p.name AS parentName
+        FROM
+            sys_menus c LEFT JOIN sys_menus p
+        ON
+            c.parentId = p.id;
+    </select>
+
+    <!-- 基于菜单 id 查询子菜单记录数量 -->
+    <select id="getChildCount" parameterType="int" resultType="int">
+        SELECT COUNT(*)
+        FROM sys_menus
+        WHERE parentId = #{id}
+    </select>
+
+    <!-- 基于菜单 id 删除菜单记录 -->
+    <delete id="deleteObject">
+        DELETE FROM sys_menus
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </delete>
+
+    <!-- 查询所有菜单的 id, name, parentId 信息 -->
+    <select id="findZtreeMenuNodes" resultType="com.cy.pj.common.bo.Node">
+        SELECT id, name, parentId
+        FROM sys_menus
+    </select>
+
+    <!-- 将用户 [新增] 的菜单数据持久化到数据库 -->
+    <insert id="insertObject" parameterType="com.cy.pj.sys.entity.SysMenu">
+        INSERT INTO sys_menus
+            (name, url, type, sort, note, parentId,
+             permission, createdTime, modifiedTime, createdUser, modifiedUser)
+        VALUES
+            (#{name}, #{url}, #{type}, #{sort}, #{note}, #{parentId},
+             #{permission}, now(), now(), #{createdUser}, #{modifiedUser})
+    </insert>
+
+    <!-- 将用户 [更新] 的数据持久化到数据库 -->
+    <update id="updateObject">
+        UPDATE sys_menus
+        SET
+            name = #{name},
+            url = #{url},
+            sort = #{sort},
+            type = #{type},
+            parentId = #{parentId},
+            permission = #{permission},
+            modifiedUser = #{modifiedUser},
+            modifiedTime = now()
+        WHERE id = #{id}
+    </update>
+</mapper>

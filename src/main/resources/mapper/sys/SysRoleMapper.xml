@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cy.pj.sys.dao.SysRoleDao">
+
+    <sql id="queryWhereId">
+        FROM sys_roles
+        <where>
+            <if test="name!=null and name!=''">
+                name LIKE CONCAT("%", #{name}, "%")
+            </if>
+        </where>
+    </sql>
+
+    <!-- 根据查询条件统计记录总数 -->
+    <select id="getRowCount" resultType="int">
+        SELECT COUNT(*)
+        <include refid="queryWhereId"></include>
+    </select>
+
+    <!-- 基于查询条件查询当前页的记录 -->
+    <select id="findPageObjects" resultType="com.cy.pj.sys.entity.SysRole">
+        SELECT *
+        <include refid="queryWhereId"></include>
+        ORDER BY createdTime DESC
+        LIMIT #{startIndex}, #{pageSize}
+    </select>
+<!--    <select id="findPageObjects" resultType="com.cy.pj.sys.entity.SysRole">&ndash;&gt;-->
+<!--        SELECT *-->
+<!--        <include refid="queryWhereId" />-->
+<!--        ORDER BY createdTime DESC-->
+<!--    </select>-->
+
+    <!-- 基于 id 删除角色记录 -->
+    <delete id="deleteObject">
+        DELETE FROM sys_roles
+        WHERE id = #{id}
+    </delete>
+
+    <!-- 将用户 [新增] 的角色数据持久化到数据库 -->
+    <insert id="insertObject" parameterType="com.cy.pj.sys.entity.SysRole" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sys_roles
+            (id, name, note, createdTime,
+            modifiedTime, createdUser, modifiedUser)
+        VALUES
+            (null, #{name}, #{note}, now(),
+            now(), #{createdUser}, #{modifiedUser})
+    </insert>
+
+    <!-- resultMap 一般用于自定义映射或一些关联查询中 -->
+    <resultMap id="sysRoleMenu" type="com.cy.pj.sys.entity.SysRoleMenu">
+        <!-- 对 id 进行专门映射 -->
+        <id property="id" column="id" />
+        <collection property="menuIds" column="id" select="com.cy.pj.sys.dao.SysRoleMenuDao.findMenuIdsByRoleId">
+        </collection>
+    </resultMap>
+
+    <!-- 基于 id 查询用户数据 -->
+    <select id="findObjectById" resultMap="sysRoleMenu">
+        SELECT id, name, note
+        FROM sys_roles
+        WHERE id = #{id}
+    </select>
+
+    <!-- 将用户 [更新] 的角色数据持久化到数据库 -->
+    <update id="updateObject" parameterType="com.cy.pj.sys.entity.SysRole">
+        UPDATE sys_roles
+        SET
+            name = #{name},
+            note = #{note},
+            modifiedUser = #{modifiedUser},
+            modifiedTime = now()
+        WHERE
+            id = #{id}
+    </update>
+
+</mapper>

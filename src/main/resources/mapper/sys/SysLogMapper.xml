@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cy.pj.sys.dao.SysLogDao">
+    <!-- 在 mybaits 中可以通过 sql 元素定义任务 -->
+    <sql id="queryWhereId">
+        FROM sys_logs
+        <where>
+            <if test="username!=null and username!=''">
+                username LIKE CONCAT("%", #{username}, "%")
+            </if>
+        </where>
+    </sql>
+
+    <select id="getRowCount" resultType="int">
+        SELECT COUNT(*)
+        <include refid="queryWhereId" />
+    </select>
+
+    <select id="findPageObjects" resultType="com.cy.pj.sys.entity.SysLog">
+        SELECT *
+        <include refid="queryWhereId" />
+        ORDER BY createdTime DESC
+        LIMIT #{startIndex},#{pageSize}
+    </select>
+
+    <!-- 定义日志删除的 sql 映射 -->
+    <delete id="deleteObjects">
+        DELETE FROM sys_logs
+        <where>
+            <if test="ids != null and ids.length > 0">
+                id IN
+                <foreach collection="ids" open="(" close=")" separator="," item="id">
+                    #{id}
+                </foreach>
+            </if>
+            OR 1 = 2
+        </where>
+    </delete>
+
+</mapper>

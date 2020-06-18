@@ -1,0 +1,72 @@
+<div th:fragment="pageFragement" xmlns:th="http://www.w3.org/1999/xhtml">
+    <ul class="pagination pagination-sm no-margin pull-right">
+        <li><a class="first">首页</a></li>
+        <li><a class="pre">上一页</a></li>
+        <li><a class="next">下一页</a></li>
+        <li><a class="last">尾页</a></li>
+        <li><a class="rowCount">总记录数(0)</a></li>
+        <li><a class="pageCount">总页数(0)</a></li>
+        <li><a class="pageCurrent">当前页(1)</a></li>
+    </ul>
+    <script type="text/javascript">
+        function doSetPagination(pageObject) {
+            //1.初始化总记录数
+            $(".rowCount").html(`总记录数(${pageObject.rowCount})`);
+            //2.初始化总页数
+            $(".pageCount").html("总页数(" + pageObject.pageCount + ")");
+            //3.初始化当前页
+            $(".pageCurrent").html("当前页(" + pageObject.pageCurrent + ")");
+
+            //4.存储当前页码值和总页数
+            //data函数为jquery中的对象的数据绑定函数
+            //data函数语法结构data(key[,value]);
+            $("#pageId").data("pageCurrent", pageObject.pageCurrent);
+            $("#pageId").data("pageCount", pageObject.pageCount);
+        }
+
+        $(function () {
+            //事件注册
+            //当点击pageId对象内部的子元素(.first,.pre,.next,.last)时执行doJumpToPage函数
+            $("#pageId")
+                .on("click", ".first,.pre,.next,.last", doJumpToPage)
+        })
+
+        function doJumpToPage() {
+            //debugger
+            //1.确定被点击的对象是谁 ?
+            //基于$(this)获取被点击的对象
+            //prop(属性名[,属性值])为html元素属性赋值或者获取属性的值
+            var cls = $(this).prop("class");//first,pre,next,last
+            //2.修改当前页码值
+            //0)获取当前页码值
+            var pageCurrent = $("#pageId").data("pageCurrent");
+            var pageCount = $("#pageId").data("pageCount");
+            //1)点击首页时当前页码值应该修改为1
+            if (cls == "first") {
+                pageCurrent = 1;
+            }
+            //2)点击尾页时当前页码值应该为pageCount
+            else if (cls == "last") {
+                pageCurrent = pageCount;
+            }
+            //3)点击上一页时，假如当前页码值是大于1的则减一。
+            else if (cls == "pre" && pageCurrent > 1) {
+                pageCurrent--;
+            }
+            //4)点击下一页时，假如当前页码值小于pageCount则加一。
+            else if (cls == "next" && pageCurrent < pageCount) {
+                pageCurrent++;
+            }
+            //5)已经是第一页还在点上一页或已经最后一页还在点下一页。
+            else {
+                return;
+            }
+            //3.基于新的页码值查询当前页数据并更新到页码上
+            //3.1重新存储新的页码值
+            $("#pageId").data("pageCurrent", pageCurrent);
+            //3.2执行新的查询
+            doGetObjects();
+        }
+
+    </script>
+</div>

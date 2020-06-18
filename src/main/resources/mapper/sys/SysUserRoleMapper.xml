@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cy.pj.sys.dao.SysUserRoleDao">
+
+    <!-- 基于角色 id 删除角色关系记录 -->
+    <delete id="deleteObjectsByRoleId">
+        DELETE FROM sys_user_roles
+        WHERE role_id = #{roleId}
+    </delete>
+
+</mapper>
