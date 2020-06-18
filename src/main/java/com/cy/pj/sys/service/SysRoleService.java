@@ -13,6 +13,7 @@ import org.apache.ibatis.annotations.Param;
  * @Date 2020-06-16
  */
 public interface SysRoleService {
+
     /**
      * 定义角色管理的分页查询业务
      * @param name 用户名(基于条件查询时的参数名  数据最终来源为 client)
@@ -52,4 +53,5 @@ public interface SysRoleService {
      * @return
      */
     int updateObject(SysRole entity, Integer[] menuIds);
+
 }
