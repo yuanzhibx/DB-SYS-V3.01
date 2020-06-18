@@ -12,4 +12,5 @@ import org.apache.ibatis.annotations.Select;
 public interface SysDeptDao {
 
     SysDept findById(Integer id);
+
 }
