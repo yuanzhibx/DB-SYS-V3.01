@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
+ * 部门实体对象
  * @author Yuanzhibx
  * @Date 2020-06-18
  */

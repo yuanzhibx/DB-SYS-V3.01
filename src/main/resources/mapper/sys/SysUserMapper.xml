@@ -3,6 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cy.pj.sys.dao.SysUserDao">
 
+    <!-- 共性操作 -->
     <sql id="queryWhereId">
         FROM sys_users
         <where>
@@ -24,7 +25,6 @@
         <include refid="queryWhereId" />
         ORDER BY createdTime DESC
     </select>
-
     <resultMap id="sysUserDept" type="com.cy.pj.sys.entity.SysUserDept">
         <association property="sysDept" column="deptId" select="com.cy.pj.sys.dao.SysDeptDao.findById">
         </association>

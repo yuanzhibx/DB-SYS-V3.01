@@ -66,6 +66,12 @@ public class SysRoleController {
         return new JsonResult(roleMenu);
     }
 
+    /**
+     * 更新角色数据 更新角色和菜单关系数据
+     * @param entity
+     * @param menuIds
+     * @return
+     */
     @RequestMapping("doUpdateObject")
     public JsonResult doUpdateObject(SysRole entity, Integer[] menuIds) {
         sysRoleService.updateObject(entity, menuIds);

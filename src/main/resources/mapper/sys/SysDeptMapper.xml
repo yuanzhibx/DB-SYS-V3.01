@@ -3,11 +3,12 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cy.pj.sys.dao.SysDeptDao">
+
     <!-- 基于部门id查询部门信息 -->
     <select id="findById" resultType="com.cy.pj.sys.entity.SysDept">
-          select *
-          from sys_depts
-          where id=#{id}
+          SELECT *
+          FROM sys_depts
+          WHERE id=#{id}
    </select>
 
 </mapper>

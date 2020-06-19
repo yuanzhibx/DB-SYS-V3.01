@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
+ * 用户部门实体对象
  *
  * @author Yuanzhibx
  * @Date 2020-06-18
@@ -22,6 +23,9 @@ public class SysUserDept implements Serializable {
     private String email;
     private String mobile;
     private Integer valid = 1;
+    /**
+     * SysDept 为部门实体对象
+     */
     private SysDept sysDept;
     private Date createdTime;
     private Date modifiedTime;
