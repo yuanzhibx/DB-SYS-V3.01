@@ -42,4 +42,5 @@ public class SysUserServiceImpl implements SysUserService {
         List<SysUserDept> records = sysUserDao.findPageObjects(username);
         return new PageObject(pageCurrent, page.getPageSize(), (int) page.getTotal(), page.getPageSize(), records);
     }
+
 }
