@@ -14,20 +14,34 @@
     </sql>
 
     <!-- 根据查询条件统计记录总数 -->
-    <select id="getRowCount" resultType="int">
-        SELECT COUNT(*)
-        <include refid="queryWhereId" />
-    </select>
+    <!--    <select id="getRowCount" resultType="int">-->
+    <!--        SELECT COUNT(*)-->
+    <!--        <include refid="queryWhereId" />-->
+    <!--    </select>-->
 
     <!-- 基于查询条件查询当前页的记录 -->
     <select id="findPageObjects" resultMap="sysUserDept">
         SELECT *
-        <include refid="queryWhereId" />
+        <include refid="queryWhereId"/>
         ORDER BY createdTime DESC
     </select>
     <resultMap id="sysUserDept" type="com.cy.pj.sys.entity.SysUserDept">
+        <!-- association 元素一般用于 Many2one 或 one2one
+            基于 deptId 查询部门信息. 然后存储到 sysDept
+         -->
         <association property="sysDept" column="deptId" select="com.cy.pj.sys.dao.SysDeptDao.findById">
         </association>
     </resultMap>
+
+    <!-- 禁用或启用用户信息 -->
+    <update id="validById">
+        UPDATE sys_users
+        SET
+            valid = #{valid},
+            modifiedUser = #{modifiedUser},
+            modifiedTime = now()
+        WHERE
+            id = #{id}
+    </update>
 
 </mapper>

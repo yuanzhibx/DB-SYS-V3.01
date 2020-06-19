@@ -18,11 +18,11 @@ public class SysUserDaoTests {
     @Autowired
     private SysUserDao sysUserDao;
 
-    @Test
-    void getRowCountTest() {
-        int rows = sysUserDao.getRowCount("admin");
-        System.out.println(rows);
-    }
+//    @Test
+//    void getRowCountTest() {
+//        int rows = sysUserDao.getRowCount("admin");
+//        System.out.println(rows);
+//    }
 
     @Test
     void findPageObjectsTest() {

@@ -11,5 +11,26 @@
           WHERE id=#{id}
    </select>
 
+    <update id="updateObject"
+            parameterType="com.cy.pj.sys.entity.SysDept">
+         update sys_depts
+         set
+           name=#{name},
+           sort=#{sort},
+           note=#{note},
+           parentId=#{parentId},
+           modifiedUser=#{modifiedUser},
+           modifiedTime=now()
+        where id=#{id}
+    </update>
+
+    <insert id="insertObject"
+            parameterType="com.cy.pj.sys.entity.SysDept">
+         insert into sys_depts
+         (name,sort,note,parentId,createdTime,modifiedTime,createdUser,modifiedUser)
+         values
+         (#{name},#{sort},#{note},#{parentId},now(),now(),#{createdUser},#{modifiedUser})
+    </insert>
+
 </mapper>
 

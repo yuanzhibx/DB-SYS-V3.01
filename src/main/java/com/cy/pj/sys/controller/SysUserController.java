@@ -30,4 +30,16 @@ public class SysUserController {
         return new JsonResult(sysUserService.findPageObjects(username, pageCurrent));
     }
 
+    /**
+     * 修改用户状态
+     * @param id 用户的 id
+     * @param valid 状态信息(0, 1)
+     * @return
+     */
+    @RequestMapping("doValidById")
+    public JsonResult doValidById(Integer id, Integer valid) {
+        sysUserService.validById(id, valid);
+        return new JsonResult("UPDATE OK");
+    }
+
 }

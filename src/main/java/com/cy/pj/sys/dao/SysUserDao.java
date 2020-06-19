@@ -20,7 +20,7 @@ public interface SysUserDao {
      * @param username
      * @return
      */
-    int getRowCount(String username);
+//    int getRowCount(String username);
 
     /**
      * 基于查询条件查询当前页的记录
@@ -28,4 +28,14 @@ public interface SysUserDao {
      * @return
      */
     List<SysUserDept> findPageObjects(String username);
+
+    /**
+     * 禁用或启用用户信息
+     * @param id
+     * @param valid
+     * @param modifiedUser
+     * @return
+     */
+    int validById(Integer id, Integer valid, String modifiedUser);
+
 }
