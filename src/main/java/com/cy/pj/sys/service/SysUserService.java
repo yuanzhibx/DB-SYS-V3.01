@@ -1,7 +1,10 @@
 package com.cy.pj.sys.service;
 
 import com.cy.pj.common.bo.PageObject;
+import com.cy.pj.sys.entity.SysUser;
 import com.cy.pj.sys.entity.SysUserDept;
+
+import java.util.Map;
 
 /**
  * 用户管理模块业务层接口
@@ -29,4 +32,26 @@ public interface SysUserService {
      */
     int validById(Integer id, Integer valid);
 
+    /**
+     * 保存 [新增] 的 用户数据 用户角色关系数据
+     * @param entity 用户数据
+     * @param roleIds 用户对应的角色 id
+     * @return
+     */
+    int saveObject(SysUser entity, Integer[] roleIds);
+
+    /**
+     * 基于用户 id 查询用户及相关信息
+     * @param userId 用户 id
+     * @return
+     */
+    Map<String, Object> findObjectById(Integer userId);
+
+    /**
+     * 更新用户数据 及 用户角色关系数据
+     * @param entity 用户数据
+     * @param roleIds 用户对应的角色 id
+     * @return
+     */
+    int updateObject(SysUser entity, Integer[] roleIds);
 }

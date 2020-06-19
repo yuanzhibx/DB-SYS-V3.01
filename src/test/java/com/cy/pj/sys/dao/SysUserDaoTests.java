@@ -30,6 +30,6 @@ public class SysUserDaoTests {
         for (SysUserDept sysUserDept : admin) {
             System.out.println(sysUserDept);
         }
-
     }
+
 }

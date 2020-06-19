@@ -1,5 +1,6 @@
 package com.cy.pj.sys.dao;
 
+import com.cy.pj.common.bo.CheckBox;
 import com.cy.pj.sys.entity.SysRole;
 import com.cy.pj.sys.entity.SysRoleMenu;
 import org.apache.ibatis.annotations.Mapper;
@@ -64,5 +65,11 @@ public interface SysRoleDao {
      * @return
      */
     int updateObject(SysRole entity);
+
+    /**
+     * 查询角色 id, name
+     * @return
+     */
+    List<CheckBox> findObjects();
 
 }

@@ -1,9 +1,12 @@
 package com.cy.pj.sys.service;
 
+import com.cy.pj.common.bo.CheckBox;
 import com.cy.pj.common.bo.PageObject;
 import com.cy.pj.sys.entity.SysRole;
 import com.cy.pj.sys.entity.SysRoleMenu;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 角色管理模块业务层接口
@@ -53,5 +56,7 @@ public interface SysRoleService {
      * @return
      */
     int updateObject(SysRole entity, Integer[] menuIds);
+
+    List<CheckBox> findObjects();
 
 }

@@ -9,4 +9,26 @@
         WHERE role_id = #{roleId}
     </delete>
 
+    <!-- 将 [新增 & 更新] 的用户角色关系数据持久化到数据库 -->
+    <insert id="insertObjects">
+        INSERT INTO sys_user_roles
+            (user_id, role_id)
+        VALUES
+        <foreach collection="roleIds" separator="," item="roleId">
+            (#{userId}, #{roleId})
+        </foreach>
+    </insert>
+
+    <!-- 基于用户 id 查询 角色 id -->
+    <select id="findRoleIdsByUserId" resultType="int">
+        SELECT role_id
+        FROM sys_user_roles
+        WHERE user_id = #{id}
+    </select>
+
+    <!-- 基于用户 id 删除用户关系数据 -->
+    <delete id="deleteObjectsByUserId" parameterType="int">
+        DELETE FROM sys_user_roles
+        WHERE user_id = #{userId}
+    </delete>
 </mapper>

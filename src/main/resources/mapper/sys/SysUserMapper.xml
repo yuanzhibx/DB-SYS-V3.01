@@ -44,4 +44,38 @@
             id = #{id}
     </update>
 
+    <!-- 将 [新增] 的用户数据持久化到数据库 -->
+    <insert id="insertObject" parameterType="com.cy.pj.sys.entity.SysUser" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sys_users
+            (username, password, deptId, email,
+            mobile, salt, valid, createdTime,
+            modifiedTime, createdUser, modifiedUser)
+        VALUES
+            (#{username}, #{password}, #{deptId}, #{email},
+            #{mobile}, #{salt}, #{valid}, now(),
+            now(), #{createdUser}, #{modifiedUser})
+    </insert>
+
+    <!-- 基于用户 id 查询用户信息 -->
+    <select id="findObjectById" parameterType="int" resultMap="sysUserDept">
+        SELECT *
+        FROM sys_users
+        WHERE id = #{id}
+    </select>
+
+    <!-- 更新用户数据 -->
+    <update id="updateObject" parameterType="com.cy.pj.sys.entity.SysUser">
+        UPDATE
+            sys_users
+        SET
+            username = #{username},
+            mobile = #{mobile},
+            email = #{email},
+            deptId = #{deptId},
+            modifiedTime = now(),
+            modifiedUser = #{modifiedUser}
+        WHERE
+            id = #{id}
+    </update>
+
 </mapper>

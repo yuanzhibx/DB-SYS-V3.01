@@ -1,5 +1,6 @@
 package com.cy.pj.sys.dao;
 
+import com.cy.pj.sys.entity.SysUser;
 import com.cy.pj.sys.entity.SysUserDept;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -38,4 +39,25 @@ public interface SysUserDao {
      */
     int validById(Integer id, Integer valid, String modifiedUser);
 
+    /**
+     * 新增
+     * 将 [新增] 的用户数据持久化到数据库
+     * @param entity
+     * @return
+     */
+    int insertObject(SysUser entity);
+
+    /**
+     * 基于用户 id 查询用户信息
+     * @param id
+     * @return
+     */
+    SysUserDept findObjectById(Integer id);
+
+    /**
+     * 更新用户数据
+     * @param entity
+     * @return
+     */
+    int updateObject(SysUser entity);
 }

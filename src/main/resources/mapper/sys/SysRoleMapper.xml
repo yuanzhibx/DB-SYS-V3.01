@@ -74,4 +74,9 @@
             id = #{id}
     </update>
 
+    <select id="findObjects" resultType="com.cy.pj.common.bo.CheckBox">
+        SELECT id, name
+        FROM sys_roles
+    </select>
+
 </mapper>

@@ -1,5 +1,6 @@
 package com.cy.pj.sys.service.impl;
 
+import com.cy.pj.common.bo.CheckBox;
 import com.cy.pj.common.bo.PageObject;
 import com.cy.pj.common.exception.ServiceException;
 import com.cy.pj.sys.dao.SysRoleDao;
@@ -176,6 +177,12 @@ public class SysRoleServiceImpl implements SysRoleService {
         sysRoleMenuDao.deleteObjectsByMenuId(entity.getId());
         sysRoleMenuDao.insertObjects(entity.getId(), menuIds);
         return rows;
+    }
+
+    @Override
+    public List<CheckBox> findObjects() {
+        List<CheckBox> objects = sysRoleDao.findObjects();
+        return objects;
     }
 
 }

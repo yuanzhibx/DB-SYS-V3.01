@@ -28,10 +28,10 @@ public class PageController {
      * 显示日志列表页面
      * @return log_list.html(日志列表)
      */
-    @RequestMapping("log/log_list")
-    public String doLogUI() {
-        return "sys/log_list";
-    }
+//    @RequestMapping("log/log_list")
+//    public String doLogUI() {
+//        return "sys/log_list";
+//    }
 
     /**
      * 显示分页页面
@@ -46,11 +46,11 @@ public class PageController {
      * 显示菜单管理页面
      * @return menu_list.html(菜单管理)
      */
-    @RequestMapping("menu/menu_list")
-    public String doMenuUI() {
-        System.out.println("PageController.doMenuUI");
-        return "sys/menu_list";
-    }
+//    @RequestMapping("menu/menu_list")
+//    public String doMenuUI() {
+//        System.out.println("PageController.doMenuUI");
+//        return "sys/menu_list";
+//    }
 
     /**
      * rest 风格的 url 定义
@@ -63,7 +63,7 @@ public class PageController {
      */
     @RequestMapping("{module}/{moduleUI}")
     public String doModuleUI(@PathVariable String moduleUI) {
-        System.out.println("PageController.doModuleUI");
+        System.out.println("PageController.doModuleUI  -- " + moduleUI);
         return "sys/"+moduleUI;
     }
 
