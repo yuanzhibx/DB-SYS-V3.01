@@ -174,4 +174,23 @@ public class SysUserServiceImpl implements SysUserService {
         return rows;
     }
 
+    /**
+     * 修改用户密码
+     * @param password 原密码
+     * @param newPassword 新密码
+     * @param cfgPassword 确认新密码
+     * @return
+     */
+//    @Override
+//    public int updatePassword(String password, String newPassword, String cfgPassword) {
+//        //1. 参数校验
+//        if (StringUtils.isEmpty(newPassword)) {
+//            throw new IllegalArgumentException("新密码不能为空");
+//        }
+//        if (StringUtils.isEmpty(cfgPassword)) {
+//            throw new IllegalArgumentException("确认密码不能为空");
+//        }
+//        return 0;
+//    }
+
 }

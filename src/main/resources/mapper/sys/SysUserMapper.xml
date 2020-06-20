@@ -78,4 +78,14 @@
             id = #{id}
     </update>
 
+    <update id="updatePassword">
+        UPDATE sys_users
+        SET
+            password = #{password},
+            salt = #{salt},
+            modifiedTime = now()
+        WHERE
+            id = #{id}
+    </update>
+
 </mapper>

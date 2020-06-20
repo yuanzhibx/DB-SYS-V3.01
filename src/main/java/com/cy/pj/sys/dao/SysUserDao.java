@@ -3,6 +3,7 @@ package com.cy.pj.sys.dao;
 import com.cy.pj.sys.entity.SysUser;
 import com.cy.pj.sys.entity.SysUserDept;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -60,4 +61,13 @@ public interface SysUserDao {
      * @return
      */
     int updateObject(SysUser entity);
+
+    /**
+     * 修改密码
+     * @param password
+     * @param salt
+     * @param id
+     * @return
+     */
+    int updatePassword(@Param("password") String password, @Param("salt") String salt, @Param("id") Integer id);
 }

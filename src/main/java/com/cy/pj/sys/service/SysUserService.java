@@ -3,6 +3,7 @@ package com.cy.pj.sys.service;
 import com.cy.pj.common.bo.PageObject;
 import com.cy.pj.sys.entity.SysUser;
 import com.cy.pj.sys.entity.SysUserDept;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Map;
 
@@ -54,4 +55,13 @@ public interface SysUserService {
      * @return
      */
     int updateObject(SysUser entity, Integer[] roleIds);
+
+    /**
+     * 修改用户密码
+     * @param password 原密码
+     * @param newPassword 新密码
+     * @param cfgPassword 确认新密码
+     * @return
+     */
+//    int updatePassword(String password, String newPassword, String cfgPassword);
 }
