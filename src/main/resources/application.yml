@@ -13,6 +13,8 @@ spring:
   thymeleaf:
     prefix: classpath:/templates/pages/
     suffix: .html
+  aop:
+    proxy-target-class: false
 
 #mybatis
 mybatis:
