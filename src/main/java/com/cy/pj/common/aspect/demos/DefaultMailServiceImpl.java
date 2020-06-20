@@ -4,21 +4,26 @@ class LogAspect {
     void before() {
         System.out.println("LogMailService.send start: " + System.currentTimeMillis());
     }
+
     void after() {
         System.out.println("LogMailService.send end: " + System.currentTimeMillis());
     }
 }
 
 /**
- * 代理对象
+ * 子类 (代理对象)
+ * CGBLB 代理对象类似此方法
+ *
  * @author Yuanzhibx
  * @Date 2020-06-20
  */
 class LogMailService extends DefaultMailServiceImpl {
     private LogAspect logAspect;
+
     public LogMailService(LogAspect logAspect) {
         this.logAspect = logAspect;
     }
+
     @Override
     public void send(String msg) {
         logAspect.before();
@@ -28,7 +33,8 @@ class LogMailService extends DefaultMailServiceImpl {
 }
 
 /**
- * 核心业务
+ * 核心业务 (目标对象)
+ *
  * @author Yuanzhibx
  * @Date 2020-06-20
  */
