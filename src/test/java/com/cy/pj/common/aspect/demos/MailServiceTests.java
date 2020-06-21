@@ -17,4 +17,5 @@ public class MailServiceTests {
         mailService.send("YUANZHIBX");
         //代理对象 -->
     }
+
 }

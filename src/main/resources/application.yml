@@ -1,10 +1,10 @@
-#server
+# server
 server:
   port: 8080
   servlet:
     context-path: /
 
-#spring
+# spring
 spring:
   datasource:
     url: jdbc:mysql:///jtsys?serverTimezone=GMT%2B8&characterEncoding=utf8
@@ -14,12 +14,17 @@ spring:
     prefix: classpath:/templates/pages/
     suffix: .html
   aop:
-    proxy-target-class: false
+    proxy-target-class: false # jdk Proxy (优先使用 JDK, 目标接口尉氏县接口会考虑使用 CGLIB 代理)
 
-#mybatis
+# mybatis
 mybatis:
   configuration:
     default-statement-timeout: 30
     map-underscore-to-camel-case: true
   mapper-locations:
     - classpath:/mapper/*/*.xml
+
+#log
+logging:
+  level:
+    com.cy: debug
