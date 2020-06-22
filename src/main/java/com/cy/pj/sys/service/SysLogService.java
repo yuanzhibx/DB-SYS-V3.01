@@ -30,4 +30,6 @@ public interface SysLogService {
      * @return
      */
     int deleteObjects(@Param("ids") Integer... ids);
+
+    void saveObject(SysLog entity);
 }

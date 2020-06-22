@@ -39,4 +39,11 @@ public interface SysLogDao {
      */
     int deleteObjects(@Param("ids") Integer... ids);
 
+    /**
+     * 将日志信息写入数据库
+     * @param entity
+     * @return
+     */
+    int insertObject(SysLog entity);
+
 }

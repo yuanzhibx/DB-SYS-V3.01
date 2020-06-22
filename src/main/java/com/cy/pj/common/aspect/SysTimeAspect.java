@@ -2,14 +2,17 @@ package com.cy.pj.common.aspect;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 /**
+ * 切面代理对象
  * AOP 通知执行顺序
  *
  * @author Yuanzhibx
  * @Date 2020-06-20
  */
+@Order(2)
 @Aspect
 @Component
 public class SysTimeAspect {
@@ -49,7 +52,7 @@ public class SysTimeAspect {
     @Around("doTime()")
     public Object doAround(ProceedingJoinPoint jp) throws Throwable {
         try {
-            System.out.println("doAround.before");
+            System.out.println("SysTimeAspect.doAround.before");
             Object proceed = jp.proceed();
             System.out.println("doAround.after");
             return proceed;

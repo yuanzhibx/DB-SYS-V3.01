@@ -29,7 +29,6 @@ public class SysLogServiceImpl implements SysLogService {
         if (pageCurrent == null || pageCurrent < 1) {
             throw new IllegalArgumentException("当前页码值不合法");
         }
-
         //2. 查询总记录数, 并进行校验
         //空指针异常则为 dao 遍历为空
         int rowCount = sysLogDao.getRowCount(username);
@@ -37,14 +36,12 @@ public class SysLogServiceImpl implements SysLogService {
         if (rowCount == 0) {
             throw new ServiceException("没有对应记录");
         }
-
         //3. 查询当前页记录
         //每页最多要显示的记录数
-        int pageSize = 3;
+        int pageSize = 30;
         //计算当前页查询的起始位置  (前面页面之和 * 每页行数)
         int startIndex = (pageCurrent - 1) * pageSize;
         List<SysLog> resords = sysLogDao.findPageObjects(username, startIndex, pageSize);
-
         //4. 对业务层查询结果进行处理和封装
         // PageObject 构造方法传参的顺序由构造方法定义时参数的顺序决定
         return new PageObject<>(pageCurrent, pageSize, rowCount,resords);
@@ -63,5 +60,10 @@ public class SysLogServiceImpl implements SysLogService {
             throw new ServiceException("该记录已不存在");
         }
         return rows;
+    }
+
+    @Override
+    public void saveObject(SysLog entity) {
+        sysLogDao.insertObject(entity);
     }
 }

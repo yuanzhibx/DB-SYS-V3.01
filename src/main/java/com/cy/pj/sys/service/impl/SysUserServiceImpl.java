@@ -1,5 +1,6 @@
 package com.cy.pj.sys.service.impl;
 
+import com.cy.pj.common.annotation.RequiredLog;
 import com.cy.pj.common.bo.PageObject;
 import com.cy.pj.common.exception.ServiceException;
 import com.cy.pj.sys.dao.SysUserDao;
@@ -43,6 +44,7 @@ public class SysUserServiceImpl implements SysUserService {
      * @param pageCurrent 当前的页码值(数据最终来源为 client)
      * @return
      */
+    @RequiredLog(operation = "分页查询")
     @Override
     public PageObject<SysUserDept> findPageObjects(String username, Integer pageCurrent) {
         //1. 对参数进行校验

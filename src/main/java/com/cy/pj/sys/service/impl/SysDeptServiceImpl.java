@@ -3,6 +3,8 @@ package com.cy.pj.sys.service.impl;
 import java.util.List;
 import java.util.Map;
 
+import com.cy.pj.common.annotation.ClearCache;
+import com.cy.pj.common.annotation.RequiredCache;
 import com.cy.pj.common.bo.Node;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,8 +25,10 @@ public class SysDeptServiceImpl implements SysDeptService {
     @Autowired
     private SysDeptDao sysDeptDao;
 
+    @RequiredCache
     @Override
     public List<Map<String, Object>> findObjects() {
+        System.out.println("SysDeptServiceImpl.findObjects----------");
         List<Map<String, Object>> list = sysDeptDao.findObjects();
         if (list == null || list.size() == 0) {
             throw new ServiceException("没有部门信息");
@@ -41,6 +45,7 @@ public class SysDeptServiceImpl implements SysDeptService {
         return list;
     }
 
+    @ClearCache
     @Override
     public int updateObject(SysDept entity) {
         //1.合法验证
@@ -62,6 +67,7 @@ public class SysDeptServiceImpl implements SysDeptService {
         return rows;
     }
 
+    @ClearCache
     @Override
     public int saveObject(SysDept entity) {
         //1.合法验证
@@ -79,6 +85,7 @@ public class SysDeptServiceImpl implements SysDeptService {
         return rows;
     }
 
+    @ClearCache
     @Override
     public int deleteObject(Integer id) {
         //1.合法性验证
