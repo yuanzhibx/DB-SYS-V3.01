@@ -1,6 +1,5 @@
 package com.cy.pj.common.aspect;
 
-import ch.qos.logback.classic.Logger;
 import com.cy.pj.common.annotation.RequiredLog;
 import com.cy.pj.common.utils.IPUtils;
 import com.cy.pj.sys.entity.SysLog;
@@ -32,7 +31,7 @@ import java.util.Date;
  * @author Yuanzhibx
  * @Date 2020-06-20
  */
-@Order(1)
+//@Order(1)
 @Aspect
 @Slf4j
 @Component
@@ -53,8 +52,8 @@ public class SysLogAspect {
      * @throws Throwable
      */
     @Around("doLogPointCut()")
-    public Object around(ProceedingJoinPoint jp) throws Throwable {
-        System.out.println("SysLogAspect.around");
+    public Object doAround(ProceedingJoinPoint jp) throws Throwable {
+        System.out.println("SysLogAspect.doAround");
         long start = System.currentTimeMillis();
         log.info("start {}", start);
         try {
@@ -62,8 +61,7 @@ public class SysLogAspect {
             Object result = jp.proceed();
             long end = System.currentTimeMillis();
             log.info("end {}", end);
-            //记录用户的正常行为信息
-            //基于此方法将用户行为信息写到数据库中
+            //记录用户的正常行为信息, 基于此方法将用户行为信息写到数据库中
             saveLog(jp, (end - start));
             return result;
         } catch (Throwable e) {
@@ -72,37 +70,48 @@ public class SysLogAspect {
         }
     }
 
-    //TODO
     @Autowired
     private SysLogService sysLogService;
 
-    //TODO 获取用户行为信息(谁在什么时间,执行了什么操作,访问了什么方法,传递了什么参数,..)并进行记录
+    /**
+     * 获取用户行为信息并进行记录
+     * (谁在什么时间,执行了什么操作,访问了什么方法,传递了什么参数,..)
+     * @param jp
+     * @param time
+     * @throws Exception
+     */
     private void saveLog(ProceedingJoinPoint jp, long time) throws Exception {
-        //1.获取用户行为信息
-        //1.1获取ip地址
+        /*
+            1. 获取用户行为信息
+         */
+        //1.1. 获取 ip 地址
         String ip = IPUtils.getIpAddr();
-        //1.2获取登陆用户名
-        String username = "admin";//做完登陆以后获取登陆的用户名
-        //1.3获取目标方法上RequiredLog注解指定的操作名
-        //1.3.1获取目标方法对象
-        //1.3.1.1获取目标对象类型
+        //1.2. 获取登录用户名
+        //TODO 做完登陆之后获取登录的用户名
+        String username = "Yuanzhibx";
+        //1.3. 获取目标方法上 requiredLog 注解指定的操作名
+        //1.3.1 获取目标方法对象
+        //1.3.1.1. 获取目标对象类型
         Class<?> targetClass = jp.getTarget().getClass();
-        //1.3.1.2获取目标类中目标方法
+        //1.3.1.2. 获取目标类中目标方法
         MethodSignature ms = (MethodSignature) jp.getSignature();
-        Method targetMethod =
-                targetClass.getDeclaredMethod(ms.getName(), ms.getParameterTypes());
-        //1.3.2获取目标方法对象上的RequiredLog注解
+//        System.out.println("ms.getMethod() = " + ms.getMethod());
+        Method targetMethod = targetClass.getDeclaredMethod(ms.getName(), ms.getParameterTypes());
+        //1.3.2. 获取目标方法对象上的 RequiredLog 注解
         RequiredLog requiredLog = targetMethod.getAnnotation(RequiredLog.class);
-        //1.3.3获取注解中指定的操作名
+        //1.3.3. 获取注解中指定的操作名
         String operation = null;
-        if (requiredLog != null) {//当切入点为注解表达式，此语句可以不进行判定
+        //当切入点为注解表达式, 此语句可以不进行判断
+        if (requiredLog != null) {
             operation = requiredLog.operation();
         }
-        //1.4获取目标方法的类全名以及方法名
+        //1.4. 获取目标方法的类全名以及方法名
         String method = targetClass.getName() + "." + targetMethod.getName();
-        //1.5获取执行方法时传入的实际参数
+        //1.4. 获取执行方法时传入的参数
         String params = new ObjectMapper().writeValueAsString(jp.getArgs());
-        //2.对用户行为信息进行封装
+        /*
+            2. 对用户行为进行封装
+         */
         SysLog userLog = new SysLog();
         userLog.setIp(ip);
         userLog.setUsername(username);
@@ -111,8 +120,12 @@ public class SysLogAspect {
         userLog.setParams(params);
         userLog.setTime(time);
         userLog.setCreatedTime(new Date());
-        //3.将用户行为信息写入到数据库
-        sysLogService.saveObject(userLog);
+        //3. 将用户行为信息写入到数据库
+//        new Thread() {
+//            public void run() {
+                sysLogService.saveObject(userLog);
+//            }
+//        }.start();
     }
 
 }

@@ -13,6 +13,9 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -23,6 +26,7 @@ import java.util.List;
  * @author Yuanzhibx
  * @Date 2020-06-16
  */
+@Transactional(timeout = 60, isolation = Isolation.READ_COMMITTED, readOnly = false, rollbackFor = Throwable.class, propagation = Propagation.REQUIRED)
 @Service
 public class SysRoleServiceImpl implements SysRoleService {
 
@@ -107,6 +111,7 @@ public class SysRoleServiceImpl implements SysRoleService {
      * @param menuIds
      * @return
      */
+    @Transactional
     @Override
     public int saveObject(SysRole entity, Integer[] menuIds) {
         //1. 验证数据的合法性

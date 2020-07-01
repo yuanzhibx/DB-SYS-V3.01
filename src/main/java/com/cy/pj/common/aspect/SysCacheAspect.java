@@ -22,7 +22,7 @@ public class SysCacheAspect {
 
     /**
      * 定义切入点:
-     * 由 @RequiredCache 注解描述的方法为切入点方法
+     * 由 RequiredCache 注解描述的方法为切入点方法
      */
     @Pointcut("@annotation(com.cy.pj.common.annotation.RequiredCache)")
     public void doCache() {

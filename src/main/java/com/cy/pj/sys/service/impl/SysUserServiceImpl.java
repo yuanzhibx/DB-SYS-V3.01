@@ -13,6 +13,9 @@ import com.github.pagehelper.PageHelper;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 
@@ -27,6 +30,8 @@ import java.util.UUID;
  * @author Yuanzhibx
  * @Date 2020-06-18
  */
+@Transactional(timeout = 60, isolation = Isolation.READ_COMMITTED, readOnly = false,
+                rollbackFor = Throwable.class, propagation = Propagation.REQUIRED)
 @Service
 public class SysUserServiceImpl implements SysUserService {
 
@@ -45,7 +50,9 @@ public class SysUserServiceImpl implements SysUserService {
      * @return
      */
     @RequiredLog(operation = "分页查询")
-    @Override
+    //readOnly 事务中不允许执行更新操作
+    @Transactional(readOnly = true)
+//    @Override
     public PageObject<SysUserDept> findPageObjects(String username, Integer pageCurrent) {
         //1. 对参数进行校验
         if (pageCurrent == null || pageCurrent < 1) {
@@ -64,7 +71,7 @@ public class SysUserServiceImpl implements SysUserService {
      * @param valid 状态信息(0, 1)
      * @return
      */
-    @Override
+//    @Override
     public int validById(Integer id, Integer valid) {
         //1. 参数校验
         if (id == null || id <= 0) {
@@ -88,7 +95,7 @@ public class SysUserServiceImpl implements SysUserService {
      * @param roleIds 用户对应的角色 id
      * @return
      */
-    @Override
+//    @Override
     public int saveObject(SysUser entity, Integer[] roleIds) {
         //1. 参数校验
         if (entity == null) {
@@ -128,7 +135,7 @@ public class SysUserServiceImpl implements SysUserService {
      * @param userId 用户 id
      * @return
      */
-    @Override
+//    @Override
     public Map<String, Object> findObjectById(Integer userId) {
         //1. 参数校验
         if (userId == null || userId <= 0) {
@@ -153,7 +160,7 @@ public class SysUserServiceImpl implements SysUserService {
      * @param roleIds 用户对应的角色 id
      * @return
      */
-    @Override
+//    @Override
     public int updateObject(SysUser entity, Integer[] roleIds) {
         //1. 参数校验
         if (entity == null) {

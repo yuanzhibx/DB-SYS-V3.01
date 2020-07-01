@@ -4,6 +4,7 @@ import com.cy.pj.common.vo.JsonResult;
 import com.cy.pj.sys.entity.SysUser;
 import com.cy.pj.sys.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,6 +21,7 @@ import java.util.Map;
 public class SysUserController {
 
     @Autowired
+    @Qualifier("sysUserServiceImpl")
     private SysUserService sysUserService;
 
     /**

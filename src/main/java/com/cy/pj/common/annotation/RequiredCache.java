@@ -18,6 +18,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface RequiredCache {
 
-    String value() default "";
+    String key() default "";
 
 }

@@ -6,7 +6,10 @@ import com.cy.pj.sys.dao.SysLogDao;
 import com.cy.pj.sys.entity.SysLog;
 import com.cy.pj.sys.service.SysLogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,6 +27,8 @@ public class SysLogServiceImpl implements SysLogService {
 
     @Override
     public PageObject<SysLog> findPageObjects(String username, Integer pageCurrent) {
+        String tName = Thread.currentThread().getName();
+        System.out.println("SysLogServiceImpl.findPageObjects.thread --> " + tName);
         //1. 参数校验
         // username 允许为空
         if (pageCurrent == null || pageCurrent < 1) {
@@ -62,8 +67,26 @@ public class SysLogServiceImpl implements SysLogService {
         return rows;
     }
 
+    /**
+     * 由 @Async 注解描述的方法, 用于告诉 spring 框架这个方法要运行一个异步线程上(此线程由 spring 线程池提供)
+     * 该异步写日志操作同样使用的是 AOP 原理
+     * @Async 描述的方法为切入点 这个切入点上执行的异步操作为通知(Advice)
+     * @param entity
+     */
+    @Async
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
     public void saveObject(SysLog entity) {
+        //获取线程名称
+        String tName = Thread.currentThread().getName();
+        System.out.println("SysLogServiceImpl.saveObject.thread --> " + tName);
+        //模拟耗时操作
+        try {
+            Thread.sleep(5000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         sysLogDao.insertObject(entity);
     }
+
 }

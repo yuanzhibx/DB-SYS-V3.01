@@ -53,9 +53,9 @@ public class SysTimeAspect {
     public Object doAround(ProceedingJoinPoint jp) throws Throwable {
         try {
             System.out.println("SysTimeAspect.doAround.before");
-            Object proceed = jp.proceed();
+            Object result = jp.proceed();
             System.out.println("doAround.after");
-            return proceed;
+            return result;
         } catch (Throwable throwable) {
             System.out.println(throwable.getMessage());
             throw throwable;

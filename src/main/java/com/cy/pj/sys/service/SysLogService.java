@@ -31,5 +31,9 @@ public interface SysLogService {
      */
     int deleteObjects(@Param("ids") Integer... ids);
 
+    /**
+     * 保存日志信息
+     * @param entity
+     */
     void saveObject(SysLog entity);
 }

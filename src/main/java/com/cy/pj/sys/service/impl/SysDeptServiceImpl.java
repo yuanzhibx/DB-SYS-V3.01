@@ -28,7 +28,7 @@ public class SysDeptServiceImpl implements SysDeptService {
     @RequiredCache
     @Override
     public List<Map<String, Object>> findObjects() {
-        System.out.println("SysDeptServiceImpl.findObjects----------");
+        System.out.println("----------SysDeptServiceImpl.findObjects----------");
         List<Map<String, Object>> list = sysDeptDao.findObjects();
         if (list == null || list.size() == 0) {
             throw new ServiceException("没有部门信息");

@@ -21,7 +21,7 @@ public class SysExceptionLogAspect {
 
     /*
         通过如下异常方法记录异常日志, 但异常还要抛出
-        所以在 afterThrowing 注解中要添加 throwing 属性,他的值为方法参数 e 的名字
+        所以在 afterThrowing 注解中要添加 throwing 属性, 值为方法参数 e 的名字
      */
 
     @AfterThrowing(pointcut = "bean(*ServiceImpl)", throwing = "e")
